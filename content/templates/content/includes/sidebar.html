@@ -1,0 +1,51 @@
+<!-- سایدبار -->
+<div class="sidebar">
+    <h5 class="mr-5"> دسته بندی ها</h5>
+    <ul class="list-unstyled">
+        {% for category in categorys %}
+        {% if category.is_sub == False %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{category.title}}
+            </a>
+            {% endif %}
+            <ul class="dropdown-menu">
+                {% for sub in category.sub_cate.all %}
+              <li><a class="dropdown-item" href="{% url 'filter_by_category' sub.slug %}">{{sub.title}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% endfor %}
+    </ul>
+
+    <hr class="w-75 mb-3" style="margin: auto; border: solid; ">
+
+    <h5 class="mr-5"> شهر ها</h5>
+
+    <ul class="list-unstyled">
+        
+        
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                محل
+            </a>
+            
+            <ul class="dropdown-menu">
+            {% for city in citys %}
+              <li><a class="dropdown-item" href="{% url 'filter_by_city' city.slug %}">{{city.title}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        
+    </ul>
+</div>
+
+<div class="content" >
+    {% include 'content/includes/advertisements.html' %}
+      
+    <!-- اینجا می‌توانید محتوای خود را اضافه کنید -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

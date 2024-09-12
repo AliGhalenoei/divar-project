@@ -1,0 +1,24 @@
+<div class="container" style="direction: ltr;">
+    {% if advertisements %}
+        {% for advertisement in advertisements %}
+            <div class="card mb-3 p-3" style="max-width: 540px; display: inline-block;">
+                <div class="row g-0">
+                <div class="col-md-4">
+                    <a href="{% url 'detail_advertisement' advertisement.advertisement.slug %}"> <img src="{{advertisement.advertisement.image.url}}" class="img-fluid rounded-start" alt="..."> </a>
+                </div>
+                <div class="col-md-8" style="direction: rtl;">
+                    <div class="card-body">
+                    <a href="{% url 'detail_advertisement' advertisement.advertisement.slug %}" style="text-decoration: none; color: black;"> <h5 class="card-title">{{advertisement.advertisement.title}}</h5> </a><br><br><br>
+                    <p class="card-text" style="position: relative; bottom: -16px;"><small class="text-body-secondary m-0">{{advertisement.advertisement.price}} تومان</small></p>
+                    <p class="card-text"><small class="text-body-secondary m-0">{{advertisement.advertisement.updated|timesince}}</small></p>
+                    </div>
+                </div>
+                    <a href="{% url 'save_advertisement' advertisement.advertisement.id %}" class="btn btn-outline-secondary w-100">حذف نشان</a>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <br>
+        <h4  style=" text-align: center; margin-top: 10px;">هیچ آگهی نشان نشده</h4>
+    {% endif%}
+</div>

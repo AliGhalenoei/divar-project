@@ -1,0 +1,41 @@
+{% extends 'accounts/base.html' %}
+
+{% block link %} {% endblock %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+    <div class="w-50 p-3 card" style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% , -50%);
+    ">
+        <div>
+            <h3 style="position: relative; bottom: -13px;">ورود به حساب کاربری</h3> 
+            <br><hr>
+
+            <h6>کد تأیید را وارد کنید</h6>
+            <br>
+            <p>کد پیامک‌شده به شمارۀ «{{get_phone}}» را وارد کنید</p>
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+    
+            <div class="input-group">
+                <input type="number" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" style="border-radius: 0px 0px 0px 0px;" name="code">
+                <span class="input-group-text" style="border-radius: 10px 0px 1px 10px;"> <a href="{% url 'authentications' %}" style="text-decoration: none; color: black;"> تغییر شمارهٔ موبایل </a> </span>
+              </div>
+
+              <br><hr>
+        <div>
+            <input type="submit" value="ورود" class="btn btn-danger" style="width: 90px; float: left;">
+            <p>سرویس پیامکی غیرفعال میباشد کد تایید شما: {{code}}</p>
+        </div>
+        </form>
+
+        
+    </div>
+
+{% endblock %}

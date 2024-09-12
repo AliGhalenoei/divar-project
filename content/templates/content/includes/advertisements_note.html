@@ -1,0 +1,26 @@
+
+{% if notes %}
+<br>
+{% for note in notes %}
+
+<div class="container">
+    <div class="p-2 w-75">
+        <div class="image " style="display: inline-block; width: 130px;">
+            <img src="{{note.advertisement.image.url}}" class="card-img" alt="..." style="width: 80px;">
+        </div>
+        <a href="{% url 'delete_note' note.id %}" style="float: left;" class="btn btn-outline-secondary">حذف یادداشت</a>
+        <div class="cont" style="display: inline-block;">
+            <h5 >{{note.advertisement.title}}</h5>
+            <p  > {{note.note}}</p>
+
+        </div>
+        
+    </div>
+
+{% endfor %}
+
+{% else %}
+    <br>
+    <h4  style=" text-align: center; margin-top: 10px;">هیچ یادداشتی وجود ندارد </h4>
+{% endif %}
+</div>

@@ -1,0 +1,62 @@
+
+<div class="container">
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="w-75 p-3" style="margin-right: 90px;">
+        <select class="form-select mt-3" aria-label="Default select example" name="city">
+          {% for i in form.city %}
+          <option value="1">{{i}}</option>
+          {% endfor %}
+        </select>
+
+        <select class="form-select mt-5" aria-label="Default select example" name="category">
+          {% for i in form.category %}
+          <option value="1">{{i}}</option>
+          {% endfor %}
+        </select>
+
+        <div class="mb-3 mt-5">
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="عنوان آگهی" name="title">
+        </div>
+
+        <div class="mb-3">
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="body" placeholder="توضیحاتی درباره آگهی"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <input class="form-control" type="file" id="formFile" name="image" placeholder="عکس محصول">
+        </div>
+
+        <select class="form-select " aria-label="Default select example" name="status">
+          {% for i in form.status %}
+            <option value="1">{{i}}</option>
+          {% endfor %}
+        </select>
+
+        <div class="mb-3 mt-5">
+          <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="قیمت مد نظر" name="price">
+        </div> 
+
+        <div class="form-check" style="text-align: left;">
+          <label class="form-check-label" for="flexCheckDefault">
+            قیمت مقطوع است
+          </label>
+          <input class="form-check-input ml-2" type="checkbox" id="flexCheckDefault" name="fixed_price">
+        </div>
+
+        <div class="form-check" style="text-align: left;">
+          <label class="form-check-label" for="flexCheckDefault">
+            مایل به معاوضه هستم
+          </label>
+          <input class="form-check-input ml-2" type="checkbox" id="flexCheckDefault" name="wiling_excheng">
+        </div>
+
+        
+
+        <input type="submit" value="ثبت آگهی" class="btn btn-outline-dark w-100 mt-3"> 
+    
+    </div>
+
+  </form>
+</div>

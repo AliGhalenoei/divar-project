@@ -1,0 +1,61 @@
+{% extends 'content/base.html' %}
+{% load static %}
+
+{% block link %} {% endblock %}
+
+{% block title %} {{advertisement.title}} {% endblock %}
+
+{% block content %} 
+
+<div class="container" style="direction: ltr;">
+
+    <div class="card w-50" style="width: 18rem; display: inline-block; float: left; ">
+        <img src="{{advertisement.image.url}}" class="card-img-top" alt="...">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="mb-3" style="text-align: right;"> 
+                <textarea class="form-control m-0" id="exampleFormControlTextarea1" rows="3" placeholder="یادداشت شما..." style="direction: rtl; max-height: 130px; height: 130px;" name="note" required></textarea>
+              </div>
+              <input type="submit" value="ذخیره" class="btn btn-outline-secondary w-100" style="position: relative; top: -15px;">
+              <div style="text-align: right;">
+                <small class="text-secondary m-0" style="direction: rtl; float: right;">یادداشت تنها برای شما قابل دیدن است و پس از حذف آگهی، پاک خواهد شد.</small> <br>
+                 
+                <div class="card border-success p-3 ">
+                  <p>:یادداشت شما</p>
+                  <p>{{note.note}}</p>
+                </div>
+
+              </div>
+        </form>
+    </div>
+
+      <div class="card w-50" style="width: 18rem; display: inline-block; text-align: right; border: none;">
+        <div class="card-body">
+          <h5 class="card-title">{{advertisement.title}}</h5>
+          <p class="card-text">{{advertisement.updated|timesince}}</p>
+          <br>
+          <a href="#" class="btn btn-outline-secondary" style="width: 450px;"> (درحال توسعه) چت </a>
+          
+          <a href="#"> <img src="{% static 'content/ico/share.png' %}" alt="" style="float: left; width: 25px;"> </a>
+          {% if can_save == True %}
+            <a href="{% url 'save_advertisement' advertisement.id %}" > <img src="{% static 'content/ico/save.png' %}" alt="" style="float: left; width: 25px; margin-left: 5px; "> </a>
+          {% else %}
+            <a href="{% url 'save_advertisement' advertisement.id %}"> <img src="{% static 'content/ico/un-save.png' %}" alt="" style="float: left; width: 25px; margin-left: 5px;"> </a>
+          {% endif %}
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">وضعیت  <span style="float: left; direction: rtl;">   {{advertisement.get_status_display}}  </span></li>
+          <li class="list-group-item">   مایل به معاوضه   {% if advertisement.wiling_excheng == True %}
+            <span style="float: left;">هستم</span> 
+            {% else %}
+            <span style="float: left;" >نیستم</span> 
+            {% endif %}  </li>
+          <li class="list-group-item">قیمت  <span style="float: left; direction: rtl;">   {{advertisement.price}} تومان {% if advertisement.fixed_price == True %}  (مقطوع)  {% endif %}</span></li>
+          <br>
+
+          <p class="card-text">{{advertisement.body|linebreaksbr}}</p>
+        </ul>
+      </div>
+    
+</div>
+{% endblock %}
