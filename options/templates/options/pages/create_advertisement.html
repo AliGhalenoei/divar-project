@@ -1,12 +1,102 @@
-{% extends 'content/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم انتخاب</title>
+    <!-- css file -->
+     <link rel="stylesheet" href="{% static 'options/css/create_ad.css' %}">
+     <!-- icon -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+    {% include 'nav/nav.html' %}
+    <br><br>
+    <section class="ad">
+        <h2>ثبت آگهی</h2>
+        <h3>انتخاب دسته بندی </h3>
+        <form action="" method="post" enctype="multipart/form-data"> 
+        {% csrf_token %}
 
-{% block link %} {% endblock %}
+        <div class="select-option">
+            <input class="ad-input-search" type="text" placeholder="تایتل آگهی خود را وارد نمایید" name="title" >
+        </div>
+        <div class="about-ad">
+            <h4>شهر</h4>
+            <select name="city">
+                <div>
+                    {% for i in form.city %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </div>
+            </select>
+            <h4>انتخاب دسته بندی</h4>
+            <select name="category">
+                <div>
+                    {% for i in form.category %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </div>
+            </select>
+            <h4>وضعیت آگهی</h4>
+            <select name="status">
+                <div>
+                    {% for i in form.status %}
+                    <option value="{{i.id}}">{{i}}</option>
+                    {% endfor %}
+                </div>
+            </select>
+            <h4>قیمت کالا</h4>
+            <input class="ad-input-search" type="number" placeholder="قیمت به تومان" min="0" name="price">
+            <h4>وضعیت آگهی را مشخص کنید</h4>
+            <div class="form-check" style="text-align: right; margin-top: 25px;">
+                <label class="form-check-label" for="flexCheckDefault" style="margin-right: 13px;">
+                  قیمت مقطوع است
+                </label>
+                <input class="form-check-input ml-2" type="checkbox" id="flexCheckDefault" name="fixed_price" style="float: right;">
+              </div>
+      
+              <div class="form-check" style="text-align: right;">
+                <label class="form-check-label" for="flexCheckDefault" style="margin-right: 13px;">
+                  مایل به معاوضه هستم
+                </label>
+                <input class="form-check-input ml-2" type="checkbox" id="flexCheckDefault" name="wiling_excheng" style="float: right;">
+              </div>
+        </div>
+        <h2>آپلود عکس</h2>
+        <div class="upload-container">
+            <label class="upload-button" for="file-upload">انتخاب عکس</label>
+            <input type="file" id="file-upload" accept="image/*" onchange="previewImage(event)" name="image">
+            <img class="preview" id="image-preview" alt="عکس آپلود شده">
+        </div>
+        <div class="description">
+            <h2>توضیحات آگهی خود را وارد نمیاید</h2>
+            <textarea name="body" id="" placeholder="توضیحات آگهی خود را وارد نمیایید"></textarea>
+        </div>
+        <div class="submit-ad">
+            <button class="ad-btn" type="submit">ثبت آگهی</button>
+        </div>
 
-{% block title %} {% endblock %}
+    </form>
+    </section>
 
+    <!-- upload img script -->
+    <script>
+        function previewImage(event) {
+            const preview = document.getElementById('image-preview');
+            const file = event.target.files[0];
+            const reader = new FileReader();
 
-{% block content %} 
-
-    {% include 'options/includes/create_advertisement_form.html' %}
-
-{% endblock %}
+            reader.onload = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block';
+            }
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>

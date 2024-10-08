@@ -1,12 +1,127 @@
-{% extends 'content/base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-{% block link %} {% endblock %}
+     <style>
+        .product-box {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 10px 0;
+            justify-content: space-between;
+        }
 
-{% block title %} {% endblock %}
+        .product-image {
+            width: 75px; /* عرض عکس */
+            height: 75px; /* ارتفاع عکس */
+            object-fit: cover; /* حفظ نسبت ابعاد عکس */
+            margin-left: 10px;
+        }
 
+        .product-title {
+            flex-grow: 1; /* برای پر کردن فضای باقی‌مانده */
+            margin: 0 10px; /* حاشیه برای فاصله */
+            text-align: right; /* راست‌چین کردن عنوان */
+            color: #000; /* رنگ متن عنوان */
+        }
 
-{% block content %} 
+        .delete-link {
+            color: red; /* رنگ لینک حذف */
+            text-decoration: none; /* بدون زیرخط */
+        }
 
-{% include 'content/includes/profile_page.html' %}
+        a {
+            text-decoration: none; /* بدون زیرخط برای لینک */
+            color: inherit; /* وراثت رنگ متن */
+        }
 
-{% endblock %}
+        max-width: 600px {
+            .product-box {
+                flex-direction: column; /* نمایش عمودی در صفحه‌های کوچک */
+                align-items: flex-start; /* چیدمان مشابه به سمت چپ */
+            }
+
+            .product-title {
+                text-align: left; /* راست‌چین برای نمایش عمودی */
+                margin: 5px 0; /* حاشیه کوچک‌تر برای عنوان */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="h-100 gradient-custom-2">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-lg-9 col-xl-7">
+                    <div class="card">
+                        <div class="rounded-top text-white d-flex flex-row" style="background-color: #000; height:230px; direction: ltr;">
+                            <div class="ms-4 d-flex flex-column" style="width: 150px;">
+                                <img src="{{user.avatar.url}}" alt="Generic placeholder image"
+                                    class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px; z-index: 1">
+                                <a href="{% url 'update_profile' user.user.id %}" type="button" class="btn btn-outline-light " data-mdb-ripple-color="dark"
+                                    style="z-index: 1;">
+                                    Edit profile
+                                </a>
+                            </div>
+                            <div class="ms-3" style="margin-top: 130px;">
+                                
+    
+                            </div>
+                        </div>
+                        <div class="p-4 text-black" style="background-color: #f8f9fa;">
+                            <div class="d-flex justify-content-end text-center py-1" style="text-align: left;">
+                                <div style="margin-right: 18px; direction: rtl; text-align: right;" >
+                                    <p class="mb-1 h5">{{user.user.user_advertisement.count}}</p>
+                                    <p class="small text-muted mb-0" style="text-align: right;">تعداد آگهی ها</p>
+                                </div>
+    
+                            </div>
+                        </div>
+                        <div class="card-body p-4 text-black">
+    
+                            <div class="mb-5" style="text-align: right;">
+                                <p class="lead fw-normal mb-1">اطلاعات حساب</p>
+                                <div class="p-4" style="background-color: #f8f9fa; text-align: right;">
+                                    <p>
+                                        شماره تلفن : {{user.user.phone}}
+                                    </p>
+                                </div>
+    
+                                
+                                <hr>
+                                <p> :آگهی ها </p>
+                                {% if advertisements %}
+                                    {% for i in user.user.user_advertisement.all %}
+                                    <a href="">
+                                        <div class="product-box">
+                                            <a href="{% url 'delete_advertisement' i.id %}" class="delete-link btn btn-outline-danger">حذف </a>
+                                            <div class="product-title"> <a href="{% url 'detail_advertisement' i.slug %}">{{i.title}}</a></div>
+                                            <img src="{{i.image.url}}" alt="محصول" class="product-image">
+                                        </div>
+                                        
+                                    </a>
+                                    {% endfor %}
+                                {% else %}
+                                    <p>در حال حاضر هیچ آگهی فعالی ندارید</p>
+                                {% endif %}
+                            </div>
+    
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

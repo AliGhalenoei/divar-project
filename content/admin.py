@@ -16,5 +16,5 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Advertisement)
 class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ['user','city','title']
+    list_display = ['user','city','title','id']
     prepopulated_fields = {'slug':('title',)}

@@ -1,13 +1,201 @@
-{% extends 'content/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دیوار</title>
+    <!-- css file -->
+     <link rel="stylesheet" href="{% static 'content/css/styles.css'%}">
+     <!-- Icon -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <!-- Nav -->
+    <nav style="position: fixed; top: 0; width: 100%;">
+        <!-- nav img -->
+        <div class="nav-item">
+            <a href="{% url 'home' %}">
+            <img src="{% static 'content/images/icon/favicon-32x32.png' %}" alt="">
+            </a>
+            <div class="link-nav">
+                <div class="location-select">
+                        <button id="location-btn"><i class="bi bi-geo-alt"></i>شهر</button>
+                        <div class="location-content">
+                            {% for i in citys %}
+                            <a href="{% url 'filter_by_city' i.slug %}">{{i.title}}</a>
+                            {% endfor %}
+                        </div>
+                </div>
 
-{% block link %} {% endblock %}
-
-{% block title %}دیوار{% endblock %}
 
 
-{% block content %} 
+                <div class="dropdown">
+                    <button id="btn-navbar"> دسته ها<i class="bi bi-arrow-down-short"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <div class="nav-wrapper">
+                            <div class="nav-items">
+                                {% for i in categorys %}
+                                <div class="nav-item">
+                                    
+                                    <div class="navItems">
+                                        <a href="#" class="nav-items-links">{{i.title}}</a>
+                                        
+                                    </div>
+                                    <div class="navItemscontent">
+                                        <a href="#" class="nav-item-desks" style="display: none;">
+                                            <div>
+                                                {% for sub in i.sub_cate.all %}
+                                                <a href="{% url 'filter_by_category' sub.slug %}"><h5>{{sub.title}}</h5></a>
+                                                {% endfor %}
+                                            </div>
+                                        </a>
+                                    </div>       
+                                </div>  
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- sidebar -->
-{% include 'content/includes/sidebar.html' %}
 
-{% endblock %}
+                <!-- nav search -->
+                 <form action="" method="get">
+                <div class="nav-search">
+                        <input type="search" placeholder="جستجو در همه آگهی ها" name="search">
+                </div>
+                </form>
+            </div>
+        </div>
+        <!-- nav links -->
+        <div class="nav-link">
+            <div class="my-dropdown">
+                    <button id="my-profile-btn"><i class="bi bi-person"></i> دیوار من</button>
+                    <div class="my-dropdown-content">
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'user_profile' request.user.id %}">پروفایل</a>
+                        <a href="{% url 'advertisement_saves' %}">نشان ها</a>
+                        <a href="{% url 'advertisement_notes' %}">یادداشت ها</a>
+                        {% endif %}
+                        <a href="{% url 'recent_visits' %}">بازدیدهای اخیر</a>
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}">خروج</a>
+                        {% else %}
+                        <a href="{% url 'authentications' %}">ورود</a>
+                        {% endif %}
+                    </div>
+            </div>
+            <a href="{% url 'contact' %}"><i class="bi bi-wrench-adjustable-circle"></i> پشتیبانی</a>
+            <a href="{% url 'create_advertisement' %}"  style="background-color: brown; padding: 10px; border-radius: 8px; color: azure;"> ثبت آگهی </a>
+        </div>
+    </nav><br><br>
+    
+    <!-- sm navbar -->
+    <section class="sm-nav" style="position: fixed; top: 0; width: 100%;">
+        <div>
+            <a href="{% url 'home' %}">
+                <img src="{% static 'content/images/icon/favicon-32x32.png' %}" alt="">
+            </a>
+        </div>
+        <div class="sm-nav-btn">
+            <a href="{% url 'create_advertisement' %}" id="adds-btn" > ثبت آگهی </a>
+            <button id="sm-menue-btn"><i class="bi bi-list"></i></button>
+        </div>
+    </section>
+
+    <!-- sm nav -->
+    <div class="sm-manue">
+        <div class="location-select-sm">
+            <button id="location-btn-sm"><i class="bi bi-geo-alt"></i>شهر</button>
+            <div class="location-content-sm">
+                {% for i in citys %}
+                <a href="{% url 'filter_by_city' i.slug %}">{{i.title}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="my-div-sm">
+            <button id="my-div-btn-sm"><i class="bi bi-person"></i>دیوار من</button>
+            <div class="my-div-content-sm">
+                {% if request.user.is_authenticated %}
+                        <a href="{% url 'user_profile' request.user.id %}">پروفایل</a>
+                        <a href="{% url 'advertisement_saves' %}">نشان ها</a>
+                        <a href="{% url 'advertisement_notes' %}">یادداشت ها</a>
+                        {% endif %}
+                        <a href="{% url 'recent_visits' %}">بازدیدهای اخیر</a>
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}">خروج</a>
+                        {% else %}
+                        <a href="{% url 'authentications' %}">ورود</a>
+                        {% endif %}
+            </div>      
+        </div>
+        <a href="{% url 'contact' %}"><i class="bi bi-wrench-adjustable-circle"></i>پشتیبانی</a>
+        {% for i in all_categorys %}
+        <a href="{% url 'filter_by_category' i.slug %}">{{i.title}}</a>
+        {% endfor %}
+    </div>
+
+    <!-- Menu & Product card -->
+    <main>
+        <!-- Right Menu -->
+        <section class="menu">
+            <div>
+                 <div class="sidebar-desk">
+                    <ul>
+                        {% for i in categorys %}
+                        <li>
+                            <a href="#" class="dropdown-toggles"><span> {{i.title}}</span></a>
+                            <ul class="dropdown-desk">
+                                {% for sub in i.sub_cate.all %}
+                                <li>
+                                    <a href="{% url 'filter_by_category' sub.slug %}">{{sub.title}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- social -->
+                <div class="social">
+                    <div>
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br><br>
+        <!-- Product -->
+        <section class="product-divar">
+            {% for i in advertisements %}
+            <div class="min-pro">
+                <a href="{% url 'detail_advertisement' i.slug %}">
+                    <div class="main-product">
+                        <div class="img-divar">
+                            <img src="{{i.image.url}}">
+                        </div>
+                        <div class="info-divar">
+                            <h3>{{i.title}}</h3>
+                            <h4>وضعیت: <span>{{i.get_status_display}}</span></h4>
+                            <h4>قیمت: <span>{{i.price}}</span></h4>
+                            <div class="time-product">
+                                <h4>{{i.created|timesince}}</h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <script src="{% static 'content/js/index.js' %}"></script>
+    <script src="{% static 'content/js/navitem.js' %}"></script>
+</body>
+</html>

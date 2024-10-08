@@ -1,61 +1,84 @@
-{% extends 'content/base.html' %}
 {% load static %}
-
-{% block link %} {% endblock %}
-
-{% block title %} {{advertisement.title}} {% endblock %}
-
-{% block content %} 
-
-<div class="container" style="direction: ltr;">
-
-    <div class="card w-50" style="width: 18rem; display: inline-block; float: left; ">
-        <img src="{{advertisement.image.url}}" class="card-img-top" alt="...">
-        <form action="" method="post">
-            {% csrf_token %}
-            <div class="mb-3" style="text-align: right;"> 
-                <textarea class="form-control m-0" id="exampleFormControlTextarea1" rows="3" placeholder="یادداشت شما..." style="direction: rtl; max-height: 130px; height: 130px;" name="note" required></textarea>
-              </div>
-              <input type="submit" value="ذخیره" class="btn btn-outline-secondary w-100" style="position: relative; top: -15px;">
-              <div style="text-align: right;">
-                <small class="text-secondary m-0" style="direction: rtl; float: right;">یادداشت تنها برای شما قابل دیدن است و پس از حذف آگهی، پاک خواهد شد.</small> <br>
-                 
-                <div class="card border-success p-3 ">
-                  <p>:یادداشت شما</p>
-                  <p>{{note.note}}</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جزییات محصول</title>
+    <!-- css files -->
+     <link rel="stylesheet" href="{% static 'content/css/details.css' %}">
+     <!-- Bootstrap icon -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body id="detail-page">
+    {% include 'nav/nav.html' %}
+    <div class="detail">
+        <div class="road-detail">
+            <div class="detail-about">
+               <h1>  {{advertisement.title}} </h1>
+               <h3> {{advertisement.updated|timesince}} </h3>
+               <div class="contact-detail">
+                <div class="detail-Btn">
+                    <button class="btn btn-outline-secondary w-100" >چت(درحال توسعه)</button>
                 </div>
-
-              </div>
-        </form>
-    </div>
-
-      <div class="card w-50" style="width: 18rem; display: inline-block; text-align: right; border: none;">
-        <div class="card-body">
-          <h5 class="card-title">{{advertisement.title}}</h5>
-          <p class="card-text">{{advertisement.updated|timesince}}</p>
-          <br>
-          <a href="#" class="btn btn-outline-secondary" style="width: 450px;"> (درحال توسعه) چت </a>
-          
-          <a href="#"> <img src="{% static 'content/ico/share.png' %}" alt="" style="float: left; width: 25px;"> </a>
-          {% if can_save == True %}
-            <a href="{% url 'save_advertisement' advertisement.id %}" > <img src="{% static 'content/ico/save.png' %}" alt="" style="float: left; width: 25px; margin-left: 5px; "> </a>
-          {% else %}
-            <a href="{% url 'save_advertisement' advertisement.id %}"> <img src="{% static 'content/ico/un-save.png' %}" alt="" style="float: left; width: 25px; margin-left: 5px;"> </a>
-          {% endif %}
+                <div class="social-icon">
+                    {% if can_save == True %}
+                    <a href="{% url 'save_advertisement' advertisement.id %}"> <img src="{% static 'content/images/icon/bookmark.png' %}" alt="" class="w-75"> </a>
+                    {% else %}
+                    <a href="{% url 'save_advertisement' advertisement.id %}"> <img src="{% static 'content/images/icon/save-instagram.png' %}" alt="" class="w-75"> </a>
+                    {% endif %}
+                </div>
+               </div>
+               <div class="detail-about-product">
+                
+               </div>
+               <h1 id="undeline"></h1>
+               <div>
+                    <div class="status">
+                        <h4>وضعیت </h4>
+                        <h5> {{advertisement.get_status_display}} </h5>
+                   </div>
+               <h1 id="undeline"></h1>
+               <div class="status">
+                   <h4>مایل به معاوضه</h4>
+                   {% if advertisement.wiling_excheng == True %}
+                      <h5>بله</h5>
+                  {% else %}
+                      <h5>خیر</h5>
+                  {% endif %}
+                </div>
+                <h1 id="undeline"></h1>
+                <div class="status">
+                    <h4>قیمت پایه</h4>
+                    <h5>{{advertisement.price}} تومان {% if advertisement.fixed_price == True %}  (مقطوع)  {% endif %}</h5>
+                </div>
+                <h1 id="undeline"></h1>
+               </div>
+               <div class="description">
+                <h2>توضیحات</h2>
+                <p> {{advertisement.body|linebreaksbr}} </p>
+            </div>
+            </div>
+            <div class="detail-img">
+                <div class="img-product">
+                  <img src="{{advertisement.image.url}}" alt="">
+                </div>
+                
+                
+                  <form action="" method="post">
+                      {% csrf_token %}
+                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="یادداشت شما..." name="note" required></textarea>
+      
+                      <input type="submit" class="btn btn-outline-dark w-100 mt-1" value="ثبت">
+                  </form>
+                  <div class="card border-success p-3 mt-1">
+                      <p> یادداشت شما :</p>
+                      <p>{{note.note}}</p>
+                    </div>
+                <label for="">یادداشت تنها برای شما قابل دیدن است و پس از حذف آگهی، پاک خواهد شد.</label>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">وضعیت  <span style="float: left; direction: rtl;">   {{advertisement.get_status_display}}  </span></li>
-          <li class="list-group-item">   مایل به معاوضه   {% if advertisement.wiling_excheng == True %}
-            <span style="float: left;">هستم</span> 
-            {% else %}
-            <span style="float: left;" >نیستم</span> 
-            {% endif %}  </li>
-          <li class="list-group-item">قیمت  <span style="float: left; direction: rtl;">   {{advertisement.price}} تومان {% if advertisement.fixed_price == True %}  (مقطوع)  {% endif %}</span></li>
-          <br>
-
-          <p class="card-text">{{advertisement.body|linebreaksbr}}</p>
-        </ul>
       </div>
-    
-</div>
-{% endblock %}
+</body>
+</html>

@@ -3,6 +3,8 @@ from django.core.mail import send_mail
 from django.shortcuts import render , redirect
 from django.template.defaultfilters import slugify
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required 
+from django.utils.decorators import method_decorator
 
 from .models import *
 from .forms import *
@@ -42,7 +44,6 @@ class ViewAdvertisementView(View):
 class DeleteAdvertisementNoteView(LoginRequiredMixin,View):
 
     def get(self , request , note_id):
-        user = request.user
         note = NoteAdvertisement.objects.get(id = note_id)
         note.delete()
         return redirect('advertisement_notes')
@@ -90,7 +91,7 @@ class DeleteAdvertisementView(LoginRequiredMixin,View):
         return redirect('user_profile' , request.user.id)
     
 
-class ContactUsView(LoginRequiredMixin,View):
+class ContactUsView(View):
 
     template_name = 'options/pages/contact.html'
     form_class = ContactUsForm
@@ -98,6 +99,7 @@ class ContactUsView(LoginRequiredMixin,View):
     def get(self , request):
         return render(request,self.template_name,{'form':self.form_class})
     
+    @method_decorator(login_required)
     def post(self , request):
         user = request.user
         form = self.form_class(request.POST)

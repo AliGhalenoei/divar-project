@@ -22,7 +22,7 @@ class HomeView(View):
 
     def setup(self, request, *args, **kwargs):
         self.citys_instance = City.objects.all()
-        self.categorys_instance = Category.objects.all()
+        self.categorys_instance = Category.objects.filter(is_sub=False)
         self.advertisements_instance = Advertisement.objects.all().order_by('?')
         return super().setup(request, *args, **kwargs)
 
@@ -30,10 +30,10 @@ class HomeView(View):
         citys = self.citys_instance
         categorys = self.categorys_instance
         advertisements = self.advertisements_instance
-        
+        all_categorys = Category.objects.all()
         # Filter advertisements by category
         if slug_category:
-            filter_category = self.categorys_instance.get(slug = slug_category)
+            filter_category = Category.objects.get(slug = slug_category)
             advertisements = self.advertisements_instance.filter(category = filter_category)
 
         # Filter advertisements by city
@@ -49,7 +49,8 @@ class HomeView(View):
             'citys':citys,
             'categorys':categorys,
             'advertisements':advertisements,
-            'form':self.form_class
+            'form':self.form_class,
+            'all_categorys':all_categorys
         })
    
     
@@ -176,3 +177,12 @@ class UpdateProfileView(LoginRequiredMixin,View):
             form.save()
             return redirect('user_profile' , profile.user.id)
         return render(request,self.template_name,{'form':form})
+
+
+
+class Page404View(View):
+
+    template_name = 'content/pages/page404.html'
+
+    def get(self , request):
+        return render(request,self.template_name)

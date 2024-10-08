@@ -30,7 +30,6 @@ class UserAuthenticationView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self , request):
-        print('User',request.user)
         return render(request,self.template_name,{'form':self.form_class})
     
     def post(self , request):

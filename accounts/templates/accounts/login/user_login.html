@@ -1,43 +1,46 @@
-{% extends 'accounts/base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <!-- style css -->
+     <link rel="stylesheet" href="{% static 'accounts/css/login.css'%}">
 
-{% block link %} {% endblock %}
-
-{% block title %} Login {% endblock %}
-
-{% block content %}
-
-    <div class="w-50 p-3 card" style="
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50% , -50%);
-    ">
-        <div>
-            <h3 style="position: relative; bottom: -13px;">ورود به حساب کاربری</h3> 
-            <br><hr>
-
-            <h6>شمارهٔ موبایل خود را وارد کنید</h6>
-            <br>
-            <p>برای استفاده از امکانات دیوار، لطفاً شمارهٔ موبایل خود را وارد کنید. کد تأیید به این شماره پیامک خواهد شد.</p>
+    <!-- icon Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+    <section class="login">
+        <div class="user-login">
+            <div>
+                <span>ورود به حساب کاربری <span><i class="bi bi-x"></i></span></span>
+            </div>
+            <h1 class="under-line"></h1>
+            <div>
+                <h3>شماره موبایل خود را وارد نمایید</h3>
+                <p>برای استفاده از امکانات دیوار، لطفاً شمارهٔ موبایل خود را وارد کنید. کد تأیید  <br>به این شماره پیامک خواهد شد.</p>
+            </div>
+            <div>
+                <form action="" method="post"> 
+                        {% csrf_token %}
+                    
+                    <input type="text" placeholder="شماره موبایل" style="border-radius: 5px;" name="phone">
+                    <h4>
+                        
+                        <a href="#">شرایط استفاده از خدمات</a>
+                        و
+                        <a id="privacy" href="#">حریم خصوصی</a>
+                        دیوار را میپذیرم.
+                    </h4>
+                </div>
+                <h1 class="under-linee"></h1>
+                <div class="submit-login">
+                <button id="login" type="submit">تایید</button>
+            </form>
+            </div>
         </div>
-        <form action="" method="post">
-            {% csrf_token %}
-    
-            <div class="input-group">
-                <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)" style="border-radius: 0px 0px 0px 0px;" name="phone">
-                <span class="input-group-text" style="border-radius: 10px 0px 1px 10px;">+98</span>
-
-              </div>
-
-              <br>
-
-              <p> <a href="#" class="text-danger" style="text-decoration: none;">شرایط استفاده از خدمات</a> و <a href="#" class="text-danger" style="text-decoration: none;"> حریم خصوصی </a> دیوار را می‌پذیرم. </p>
-              <br><hr>
-              <div>
-                <input type="submit" value="تأیید" class="btn btn-danger" style="width: 90px; float: left;">
-               </div>
-        </form>
-        
-    </div>
-
-{% endblock %}
+    </section>
+</body>
+</html>

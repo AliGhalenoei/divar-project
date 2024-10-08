@@ -13,4 +13,6 @@ urlpatterns = [
 
     path('user/profile/<int:user_id>/',views.UserProfileView.as_view(),name='user_profile'),
     path('update/profile/<int:user_id>/',views.UpdateProfileView.as_view(),name='update_profile'),
+
+    path('404/',views.Page404View.as_view(),name='404'),
 ]

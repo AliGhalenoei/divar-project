@@ -1,92 +1,15 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Navbar و Sidebar ریسپانسیو</title>
-    <style>
-        .navbar-custom {
-            background-color: #f8f9fa;
-        }
-        .sidebar {
-        direction: rtl;
-        position: fixed;
-        top: 57px; /* ارتفاع navbar */
-        right: 0; /* تغییر به سمت راست */
-        width: 250px; /* عرض سایدبار */
-        height: calc(100% - 56px);
-        background-color: #ffffff;
-        padding-top: 20px;
-        overflow-y: auto;
-        text-align: right;
-        
-}
-
-.content {
- margin-right: 250px; /* فاصله محتوای اصلی از سایدبار */
- padding: 20px;
- direction: rtl;
-}
-
-@media (max-width: 768px) {
- .sidebar {
- position: relative;
- top: 0;
- height: auto;
- width: auto;
- }
- .content {
- margin-right: 0; /* حذف فاصله برای حالت موبایل */
- }
-}
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-custom w-100" style="z-index: 1; position: fixed;">
-        <button style="box-shadow: gray 2px 2px 2px 1px;" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            منو
-          </button>
-        
-         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-         <ul class="navbar-nav">
-         <li class="nav-item active">
-         <a class="nav-link text-light" href="{% url 'create_advertisement' %}" style="background-color: brown; border-radius: 8px; width: 100px; text-align: center;">ثبت آگهی</a>
-         </li>
-         <li class="nav-item">
-         <a class="nav-link" href="{% url 'contact' %}">پشتیبانی</a>
-         </li>
-         <li class="nav-item dropdown">
-         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         دیوار من
-         </a>
-         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-         {% if user.is_authenticated %}
-         <a class="dropdown-item" href="{% url 'user_profile' request.user.id %}">کاربر دیوار</a>
-         <a class="dropdown-item" href="{% url 'advertisement_saves' %}">نشان ها</a>
-         <a class="dropdown-item" href="{% url 'advertisement_notes' %}">یاد داشت ها</a>
-         {% endif %}
-         <a class="dropdown-item" href="{% url 'recent_visits' %}">بازدید های اخیر</a>
-         <div class="dropdown-divider"></div>
-         {% if user.is_authenticated %}
-         <a class="dropdown-item" href="{% url 'logout' %}">خروج</a>
-         {% else %}
-         <a class="dropdown-item" href="{% url 'authentications' %}">ورود</a>
-         {% endif %}
-         </div>
-         </li>
-         </ul>
-         </div>
-        
-         <div class="form-inline my-2 my-lg-0 ml-auto">
-            
-         <form action="" method="get">
-         {% csrf_token %}
-         <input class="form-control mr-sm-2 w-100" style="direction: rtl;" placeholder="جستجو..." aria-label="Search" name="search">
-         </form>
-         <a class="navbar-brand text-danger ml-3" href="{% url 'home' %}">دیوار</a>
-         </div>
-        </nav>
-        <br><br><br>
-</body>
-</html>
+{% load static %}
+<!--* start navbar -->
+<header>
+    <div class="header-logo"> <a href="{% url 'home' %}"> <img src="{% static 'content/svg/divar.svg' %}"/> </a> </div>
+    <nav>
+      <ul>
+        <li><a href="#">ثبت آگهی</a></li>
+        <li><a href="#">درباره دیوار</a></li>
+        <li><a href="#">دریافت برنامه</a></li>
+        <li><a href="#">اتاق خبر</a></li>
+        <li><a href="{% url 'contact' %}">پشتیبانی</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- * end navbar -->
